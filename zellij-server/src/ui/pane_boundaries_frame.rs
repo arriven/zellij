@@ -70,7 +70,7 @@ pub struct FrameParams {
     pub other_cursors_exist_in_session: bool,
 }
 
-#[derive(Default, PartialEq)]
+#[derive(Default, PartialEq, Eq)]
 pub struct PaneFrame {
     pub geom: Viewport,
     pub title: String,

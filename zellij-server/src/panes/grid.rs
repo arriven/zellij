@@ -273,7 +273,7 @@ fn calculate_row_display_height(row_width: usize, viewport_width: usize) -> usiz
 
 fn subtract_isize_from_usize(u: usize, i: isize) -> usize {
     if i.is_negative() {
-        u - i.abs() as usize
+        u - i.unsigned_abs()
     } else {
         u + i as usize
     }
@@ -1590,7 +1590,7 @@ impl Grid {
                 Row::from_columns(VecDeque::from(vec![EMPTY_TERMINAL_CHARACTER; self.width]));
 
             // get the row from lines_above, viewport, or lines below depending on index
-            let row = if l < 0 && self.lines_above.len() > l.abs() as usize {
+            let row = if l < 0 && self.lines_above.len() > l.unsigned_abs() {
                 let offset_from_end = l.abs();
                 &self.lines_above[self
                     .lines_above
@@ -2055,7 +2055,7 @@ impl Perform for Grid {
                         }
                         self.changed_colors.as_mut().unwrap()[i as usize] = Some(c);
                         return;
-                    } else if chunk.get(1).as_ref().and_then(|c| c.get(0)) == Some(&b'?') {
+                    } else if chunk.get(1).as_ref().and_then(|c| c.first()) == Some(&b'?') {
                         if let Some(index) = index {
                             let terminal_emulator_color_codes =
                                 self.terminal_emulator_color_codes.borrow();
@@ -2148,7 +2148,7 @@ impl Perform for Grid {
                     return;
                 }
 
-                let _clipboard = params[1].get(0).unwrap_or(&b'c');
+                let _clipboard = params[1].first().unwrap_or(&b'c');
                 match params[2] {
                     b"?" => {
                         // TBD: paste from own clipboard - currently unsupported
@@ -2282,7 +2282,7 @@ impl Perform for Grid {
             let move_back_count = next_param_or(1);
             self.move_cursor_back(move_back_count);
         } else if c == 'l' {
-            let first_intermediate_is_questionmark = match intermediates.get(0) {
+            let first_intermediate_is_questionmark = match intermediates.first() {
                 Some(b'?') => true,
                 None => false,
                 _ => false,
@@ -2370,7 +2370,7 @@ impl Perform for Grid {
                 }
             }
         } else if c == 'h' {
-            let first_intermediate_is_questionmark = match intermediates.get(0) {
+            let first_intermediate_is_questionmark = match intermediates.first() {
                 Some(b'?') => true,
                 None => false,
                 _ => false,
@@ -2524,7 +2524,7 @@ impl Perform for Grid {
             let line_count = next_param_or(1);
             self.rotate_scroll_region_up(line_count as usize);
         } else if c == 'S' {
-            let first_intermediate_is_questionmark = match intermediates.get(0) {
+            let first_intermediate_is_questionmark = match intermediates.first() {
                 Some(b'?') => true,
                 None => false,
                 _ => false,
@@ -2596,7 +2596,7 @@ impl Perform for Grid {
                 self.advance_to_next_tabstop(self.cursor.pending_styles);
             }
         } else if c == 'q' {
-            let first_intermediate_is_space = matches!(intermediates.get(0), Some(b' '));
+            let first_intermediate_is_space = matches!(intermediates.first(), Some(b' '));
             if first_intermediate_is_space {
                 // DECSCUSR (CSI Ps SP q) -- Set Cursor Style.
                 let cursor_style_id = next_param_or(0);
@@ -2613,7 +2613,7 @@ impl Perform for Grid {
                 if let Some(cursor_shape) = shape {
                     self.cursor.change_shape(cursor_shape);
                 }
-            } else if matches!(intermediates.get(0), Some(b'>')) {
+            } else if matches!(intermediates.first(), Some(b'>')) {
                 let version = version_number(VERSION);
                 let xtversion = format!("\u{1b}P>|Zellij({})\u{1b}\\", version);
                 self.pending_messages_to_pty
@@ -2626,7 +2626,7 @@ impl Perform for Grid {
         } else if c == 'c' {
             // identify terminal
             // https://vt100.net/docs/vt510-rm/DA1.html
-            match intermediates.get(0) {
+            match intermediates.first() {
                 None | Some(0) => {
                     // primary device attributes - VT220 with sixel
                     let terminal_capabilities = "\u{1b}[?62;4c";
@@ -2731,7 +2731,7 @@ impl Perform for Grid {
     }
 
     fn esc_dispatch(&mut self, intermediates: &[u8], _ignore: bool, byte: u8) {
-        match (byte, intermediates.get(0)) {
+        match (byte, intermediates.first()) {
             (b'A', charset_index_symbol) => {
                 let charset_index: CharsetIndex = match charset_index_symbol {
                     Some(b'(') => CharsetIndex::G0,

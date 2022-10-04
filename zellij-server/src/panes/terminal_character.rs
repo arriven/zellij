@@ -113,7 +113,7 @@ impl NamedColor {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Default)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Default)]
 pub struct CharacterStyles {
     pub foreground: Option<AnsiCode>,
     pub background: Option<AnsiCode>,
@@ -563,7 +563,7 @@ impl Display for CharacterStyles {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum LinkAnchor {
     Start(u16),
     End,
@@ -714,7 +714,7 @@ impl Cursor {
     }
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub struct TerminalCharacter {
     pub character: char,
     pub styles: CharacterStyles,
