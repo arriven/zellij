@@ -162,7 +162,7 @@ pub fn start_fake_client(
                 break;
             },
             ClientInstruction::Error(_) => {
-                let _ = os_input.send_to_server(ClientToServerMsg::Action(Action::Quit, None));
+                os_input.send_to_server(ClientToServerMsg::Action(Action::Quit, None));
                 // handle_error(backtrace);
             },
             ClientInstruction::Render(_) => {

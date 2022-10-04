@@ -333,7 +333,7 @@ pub fn start_client(
             .get_stdout_writer()
             .write(error.as_bytes())
             .unwrap();
-        let _ = os_input.get_stdout_writer().flush().unwrap();
+        os_input.get_stdout_writer().flush().unwrap();
         std::process::exit(1);
     };
 

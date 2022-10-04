@@ -1,3 +1,4 @@
+use std::fmt::Write;
 use std::time::{Duration, Instant};
 
 const STARTUP_PARSE_DEADLINE_MS: u64 = 500;
@@ -37,7 +38,7 @@ impl StdinAnsiParser {
         // query colors
         // eg. <ESC>]4;5;?<ESC>\ => query color register number 5
         for i in 0..256 {
-            query_string.push_str(&format!("\u{1b}]4;{};?\u{1b}\u{5c}", i));
+            write!(&mut query_string, "\u{1b}]4;{};?\u{1b}\u{5c}", i).unwrap();
         }
         self.parse_deadline =
             Some(Instant::now() + Duration::from_millis(STARTUP_PARSE_DEADLINE_MS));
