@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::str::FromStr;
 
-#[derive(Copy, Clone, Debug, PartialEq, Deserialize, Serialize, ArgEnum)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Deserialize, Serialize, ArgEnum)]
 pub enum OnForceClose {
     #[serde(alias = "quit")]
     Quit,
@@ -32,7 +32,7 @@ impl FromStr for OnForceClose {
     }
 }
 
-#[derive(Clone, Default, Debug, PartialEq, Deserialize, Serialize, Args)]
+#[derive(Clone, Default, Debug, PartialEq, Eq, Deserialize, Serialize, Args)]
 /// Options that can be set either through the config file,
 /// or cli flags - cli flags should take precedence over the config file
 /// TODO: In order to correctly parse boolean flags, this is currently split
@@ -108,7 +108,7 @@ pub struct Options {
     pub scrollback_editor: Option<PathBuf>,
 }
 
-#[derive(ArgEnum, Deserialize, Serialize, Debug, Clone, Copy, PartialEq)]
+#[derive(ArgEnum, Deserialize, Serialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Clipboard {
     #[serde(alias = "system")]
     System,
@@ -238,7 +238,7 @@ impl Options {
     }
 }
 
-#[derive(Clone, Default, Debug, PartialEq, Args, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, PartialEq, Eq, Args, Serialize, Deserialize)]
 /// Options that can be set through cli flags
 /// boolean flags end up toggling boolean options in `Options`
 pub struct CliOptions {

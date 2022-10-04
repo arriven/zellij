@@ -425,7 +425,7 @@ mod not_wasm {
                 .unwrap();
             }
             writeln!(&mut message, "[DATA DIR]: {:?}", data_dir).unwrap();
-            message.push_str(&format!("[PLUGIN DIR]: {:?}\n", plugin_dir));
+            writeln!(&mut message, "[PLUGIN DIR]: {:?}", plugin_dir).unwrap();
             if let Some(layout_dir) = layout_dir {
                 writeln!(&mut message, "[LAYOUT DIR]: {:?}", layout_dir).unwrap();
             } else {

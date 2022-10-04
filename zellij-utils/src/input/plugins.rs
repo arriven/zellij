@@ -23,11 +23,11 @@ lazy_static! {
     };
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PluginsConfigFromYaml(Vec<PluginConfigFromYaml>);
 
 /// Used in the config struct for plugin metadata
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PluginsConfig(HashMap<PluginTag, PluginConfig>);
 
 impl PluginsConfig {
@@ -109,7 +109,7 @@ impl From<PluginConfigFromYaml> for PluginConfig {
 }
 
 /// Plugin metadata
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PluginConfig {
     /// Path of the plugin, see resolve_wasm_bytes for resolution semantics
     pub path: PathBuf,
@@ -153,7 +153,7 @@ impl PluginConfig {
 }
 
 /// Type of the plugin. Defaults to Pane.
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum PluginType {
     // TODO: A plugin with output that's cloned across every pane in a tab, or across the entire
@@ -172,7 +172,7 @@ impl Default for PluginType {
     }
 }
 
-#[derive(Clone, Debug, Default, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PluginConfigFromYaml {
     pub path: PathBuf,
     pub tag: PluginTag,
@@ -184,7 +184,7 @@ pub struct PluginConfigFromYaml {
     pub _allow_exec_host_cmd: bool,
 }
 
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum PluginTypeFromYaml {
     Headless,
@@ -197,7 +197,7 @@ impl Default for PluginTypeFromYaml {
     }
 }
 
-#[derive(Error, Debug, PartialEq)]
+#[derive(Error, Debug, PartialEq, Eq)]
 pub enum PluginsConfigError {
     #[error("Duplication in plugin tag names is not allowed: '{}'", String::from(.0.clone()))]
     DuplicatePlugins(PluginTag),

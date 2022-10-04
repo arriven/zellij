@@ -9,14 +9,14 @@ use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 
 /// Used in the config struct
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Keybinds(HashMap<InputMode, ModeKeybinds>);
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ModeKeybinds(BTreeMap<Key, Vec<Action>>);
 
 /// Intermediate struct used for deserialisation
 /// Used in the config file.
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct KeybindsFromYaml {
     #[serde(flatten)]
     keybinds: HashMap<InputMode, Vec<KeyActionUnbind>>,
@@ -25,7 +25,7 @@ pub struct KeybindsFromYaml {
 }
 
 /// Intermediate enum used for deserialisation
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(untagged)]
 enum KeyActionUnbind {
     KeyAction(KeyActionFromYaml),
@@ -33,21 +33,21 @@ enum KeyActionUnbind {
 }
 
 /// Intermediate struct used for deserialisation
-#[derive(Clone, Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize)]
 struct KeyActionUnbindFromYaml {
     keybinds: Vec<KeyActionFromYaml>,
     unbind: Unbind,
 }
 
 /// Intermediate struct used for deserialisation
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct KeyActionFromYaml {
     action: Vec<Action>,
     key: Vec<Key>,
 }
 
 /// Intermediate struct used for deserialisation
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 struct UnbindFromYaml {
     unbind: Unbind,
 }

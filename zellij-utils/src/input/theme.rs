@@ -13,22 +13,22 @@ use crate::data::{Palette, PaletteColor};
 use crate::shared::detect_theme_hue;
 
 /// Intermediate deserialization of themes
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ThemesFromYamlIntermediate(HashMap<String, Theme>);
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ThemesFromYaml {
     pub themes: ThemesFromYamlIntermediate,
 }
 
 type ThemesFromYamlResult = Result<ThemesFromYaml, ConfigError>;
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 pub struct UiConfigFromYaml {
     pub pane_frames: FrameConfigFromYaml,
 }
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 pub struct FrameConfigFromYaml {
     pub rounded_corners: bool,
 }
@@ -38,7 +38,7 @@ struct ThemeFromYaml {
     palette: PaletteFromYaml,
 }
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct Theme {
     #[serde(flatten)]
     palette: PaletteFromYaml,

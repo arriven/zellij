@@ -375,7 +375,7 @@ impl Default for PluginCapabilities {
     }
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CopyDestination {
     Command,
     Primary,

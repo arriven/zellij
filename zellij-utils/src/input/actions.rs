@@ -156,7 +156,7 @@ impl From<OnForceClose> for Action {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ActionsFromYaml(Vec<Action>);
 
 impl ActionsFromYaml {

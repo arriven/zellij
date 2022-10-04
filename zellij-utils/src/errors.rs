@@ -165,7 +165,7 @@ impl<T> FatalError<T> for anyhow::Result<T> {
 /// Complex variants store a variant of a related enum, whose variants can be built from
 /// the corresponding Zellij MSPC instruction enum variants ([`ScreenInstruction`],
 /// [`PtyInstruction`], [`ClientInstruction`], etc).
-#[derive(Copy, Clone, PartialEq, Serialize, Deserialize, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, Serialize, Deserialize, Debug)]
 pub enum ContextType {
     /// A screen-related call.
     Screen(ScreenContext),
@@ -207,7 +207,7 @@ impl Display for ContextType {
 
 // FIXME: Just deriving EnumDiscriminants from strum will remove the need for any of this!!!
 /// Stack call representations corresponding to the different types of [`ScreenInstruction`]s.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ScreenContext {
     HandlePtyBytes,
     Render,
@@ -302,7 +302,7 @@ pub enum ScreenContext {
 }
 
 /// Stack call representations corresponding to the different types of [`PtyInstruction`]s.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PtyContext {
     SpawnTerminal,
     OpenInPlaceEditor,
@@ -317,7 +317,7 @@ pub enum PtyContext {
 }
 
 /// Stack call representations corresponding to the different types of [`PluginInstruction`]s.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PluginContext {
     Load,
     Update,
@@ -329,7 +329,7 @@ pub enum PluginContext {
 }
 
 /// Stack call representations corresponding to the different types of [`ClientInstruction`]s.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ClientContext {
     Exit,
     Error,
@@ -342,7 +342,7 @@ pub enum ClientContext {
 }
 
 /// Stack call representations corresponding to the different types of [`ServerInstruction`]s.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ServerContext {
     NewClient,
     Render,
@@ -357,7 +357,7 @@ pub enum ServerContext {
     ActiveClients,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PtyWriteContext {
     Write,
     Exit,

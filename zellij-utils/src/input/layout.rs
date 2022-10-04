@@ -410,7 +410,7 @@ impl LayoutFromYaml {
 
 // The struct that is used to deserialize the session from
 // a yaml configuration file
-#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub struct SessionFromYaml {
     pub name: Option<String>,
     #[serde(default = "default_as_some_true")]

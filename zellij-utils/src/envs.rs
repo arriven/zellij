@@ -34,7 +34,7 @@ pub fn get_socket_dir() -> Result<String> {
 }
 
 /// Manage ENVIRONMENT VARIABLES from the configuration and the layout files
-#[derive(Debug, Default, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct EnvironmentVariablesFromYaml {
     env: HashMap<String, String>,
 }
